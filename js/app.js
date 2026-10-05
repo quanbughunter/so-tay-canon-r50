@@ -107,6 +107,31 @@
   };
   tally();
 
+  /* ---------- chọn máy 15–20 triệu ---------- */
+  (function buy() {
+    const B = window.BUY; if (!B) return;
+    const nf = x => String(x).replace('.', ',');
+    const rng = r => !r ? '—' : (r[0] === r[1] ? nf(r[0]) : nf(r[0]) + '–' + nf(r[1])) + ' tr';
+    const evf = m => m.evf === true ? '<span class="tag ok">Có kính ngắm</span>' : m.evf === false ? '<span class="tag bad">Không kính ngắm</span>' : `<span class="tag">${m.evf}</span>`;
+    const card = m => `<article class="buy ${m.g}">
+      <header><h4>${m.name}</h4><span class="yr">${m.year}</span></header>
+      <p class="kit">+ ống ${m.kit}</p>
+      <div class="tags">${evf(m)}${m.screen ? `<span class="tag">Màn: ${m.screen}</span>` : ''}<span class="tag ${m.alive ? '' : 'bad'}">Ngàm ${m.mount}</span></div>
+      <dl class="price"><dt>Mới</dt><dd>${m.vnNew ? rng(m.vnNew) : 'không còn bán'}${m.newNote ? ` <small>(${m.newNote})</small>` : ''}</dd><dt>Cũ</dt><dd>${rng(m.vnUsed)}${m.usedNote ? ` <small>(${m.usedNote})</small>` : ''}</dd>${m.ru ? `<dt>Ở Moscow</dt><dd>${m.ru}</dd>` : ''}</dl>
+      <ul class="pc">${m.pros.map(x => `<li class="p">${x}</li>`).join('')}${m.cons.map(x => `<li class="c">${x}</li>`).join('')}</ul>
+      <p class="fit"><b>Hợp với:</b> ${m.fit}</p></article>`;
+    $('#buyAsof').textContent = B.asof;
+    $('#buy').innerHTML = B.groups.map(g => `<div class="bgroup"><h3 class="sub">${g.title}</h3><p class="muted small">${g.note}</p><div class="buygrid">${B.models.filter(m => m.g === g.id).map(card).join('')}</div></div>`).join('');
+    $('#buyTable').innerHTML = '<thead><tr><th>Máy (kit)</th><th>Kính ngắm</th><th>Ngàm còn phát triển</th><th>Mới</th><th>Cũ</th></tr></thead><tbody>' +
+      B.models.map(m => `<tr><td><b>${m.name}</b></td><td>${m.evf === true ? 'Có' : m.evf === false ? 'Không' : m.evf}</td><td>${m.alive ? 'Có' : 'Không'}</td><td>${m.vnNew ? rng(m.vnNew) : '—'}</td><td>${rng(m.vnUsed)}</td></tr>`).join('') + '</tbody>';
+    $('#buySrc').innerHTML = B.sources.map(([t, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${t}</a></li>`).join('') + `<li>Tỷ giá dùng trong trang: 1 ₽ ≈ ${B.rub} đ (${B.rubSrc}).</li>`;
+    const vnd = rub => { const v = rub * (+$('#cvRate').value || B.rub); return v >= 1e6 ? nf((v / 1e6).toFixed(1)) + ' triệu đ' : Math.round(v).toLocaleString('vi-VN') + ' đ'; };
+    $('#cvRate').value = B.rub;
+    $('#cvNote').textContent = `Tỷ giá chính thức (${B.rubSrc}). Đổi tiền hoặc chuyển khoản thực tế sẽ lệch một chút.`;
+    const conv = () => { const r = +$('#cvRub').value || 0; $('#cvOut').innerHTML = `${r.toLocaleString('vi-VN')} ₽ ≈ <b>${vnd(r)}</b>`; document.querySelectorAll('[data-rub]').forEach(e => e.textContent = vnd(+e.dataset.rub)); };
+    $('#cvRub').oninput = $('#cvRate').oninput = conv; conv();
+  })();
+
   document.querySelectorAll('table.stack').forEach(t => { const hs = [...t.querySelectorAll('thead th')].map(h => h.textContent); t.querySelectorAll('tbody tr').forEach(r => [...r.children].forEach((c, i) => c.dataset.l = hs[i] || '')); });
 
   /* ---------- từ điển ---------- */
@@ -131,7 +156,7 @@
     ['Bắt đầu', [['ten', 'Đọc tên máy']]],
     ['Bộ phận máy', FACES],
     ['Thực hành', [['lab-sec', 'Phòng thí nghiệm ảnh'], ['hoc', 'Học chụp']]],
-    ['Khi đi mua', [['mua', 'Mua máy cũ'], ['tu-dien', 'Từ điển viết tắt'], ['quiz-sec', 'Tự kiểm tra']]]
+    ['Khi đi mua', [['chon-may', 'Chọn máy 15–20 triệu'], ['mua', 'Mua máy cũ'], ['tu-dien', 'Từ điển viết tắt'], ['quiz-sec', 'Tự kiểm tra']]]
   ];
   const label = Object.fromEntries(SECS.flatMap(g => g[1]));
   label.top = 'Trang đầu';

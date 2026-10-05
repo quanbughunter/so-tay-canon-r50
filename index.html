@@ -13,7 +13,7 @@
 <div class="bar" id="bar"><div class="wrap">
   <a class="brand" href="#top"><i>Sổ tay </i><span>Canon R50</span></a>
   <nav class="mainnav" aria-label="Các phần chính">
-    <a href="#ten">Tên máy</a><a href="#tren" data-group="parts">Bộ phận</a><a href="#lab-sec">Thí nghiệm</a><a href="#hoc">Học chụp</a><a href="#mua">Mua máy cũ</a><a href="#tu-dien">Từ điển</a><a href="#quiz-sec">Kiểm tra</a>
+    <a href="#ten">Tên máy</a><a href="#tren" data-group="parts">Bộ phận</a><a href="#lab-sec">Thí nghiệm</a><a href="#hoc">Học chụp</a><a href="#chon-may">Chọn máy</a><a href="#mua">Mua máy cũ</a><a href="#tu-dien">Từ điển</a><a href="#quiz-sec">Kiểm tra</a>
   </nav>
   <span class="here" id="here"></span>
   <button class="menubtn" id="menubtn" type="button" aria-expanded="false" aria-controls="menu"><span class="burger" aria-hidden="true"></span>Mục lục</button>
@@ -90,6 +90,58 @@
 </div></section>
 <hr class="rule">
 
+<section class="chap" id="chon-may"><div class="wrap">
+  <header><h2>Chọn máy cho người mới: tầm 15–20 triệu</h2><p>Trọn bộ thân máy + ống kính đi kèm (kit). Giá là giá tham khảo ở cửa hàng tại Việt Nam, xem ngày <b id="buyAsof"></b>; giá đổi theo khuyến mãi từng tuần, hãy kiểm tra lại trước khi trả tiền. Dòng “Ở Moscow” là giá cửa hàng ở Nga, nếu tìm được.</p></header>
+  <div id="buy"></div>
+  <h3 class="sub">So sánh nhanh</h3>
+  <div class="tscroll"><table class="stack" id="buyTable"></table></div>
+  <h3 class="sub">Cách định giá một tin bán</h3>
+  <div class="two">
+    <div class="card"><ol class="rules">
+      <li><b>Hỏi rõ bán gì:</b> chỉ thân máy hay cả ống kính, mấy pin, có sạc, hộp, hóa đơn không. Cùng một tên máy, chênh nhau vài triệu chỉ vì thiếu ống.</li>
+      <li><b>Đặt giá cạnh ba mốc:</b> giá máy cũ ở cửa hàng, giá tin rao cá nhân, giá máy mới (bảng ở trên).</li>
+      <li><b>Máy cũ chỉ rẻ hơn máy mới 1–2 triệu</b> thì mua mới, có bảo hành chính hãng, thường lợi hơn.</li>
+      <li><b>“97%”, “like new” là người bán tự chấm</b>, không phải tiêu chuẩn nào. Hỏi số lần chụp (shutter count) và xin ảnh chụp thật của chính chiếc máy.</li>
+      <li><b>Máy thuộc hệ đã dừng</b> (Canon EF-M: M100, M200, M50) phải rẻ hơn hẳn mới đáng mua, vì sau này không có ống kính mới.</li>
+      <li><b>Mua của người lạ</b> thường rẻ hơn cửa hàng nhưng không có bảo hành: kiểm tra kỹ theo <a href="#mua">danh sách mua máy cũ</a>.</li>
+    </ol></div>
+    <div class="card conv">
+      <h4>Đổi giá rúp sang tiền Việt</h4>
+      <div class="cvrow">
+        <label>Giá rao (₽)<input type="number" id="cvRub" inputmode="numeric" min="0" step="500" value="45000"></label>
+        <label>Tỷ giá: 1 ₽ =<span class="cvrate"><input type="number" id="cvRate" inputmode="decimal" min="0" step="1"> đ</span></label>
+      </div>
+      <p class="cvout" id="cvOut"></p>
+      <p class="small muted" id="cvNote"></p>
+    </div>
+  </div>
+  <h3 class="sub">Hai ví dụ định giá</h3>
+  <div class="two">
+    <div class="card ex2">
+      <p class="lbl2">Tin rao ở Moscow</p>
+      <h4>Canon EOS M100 “97%”, giá 45.000 ₽ <span class="muted">(≈ <span data-rub="45000"></span>)</span></h4>
+      <ul>
+        <li><b>Nếu chỉ có thân máy: đắt.</b> Cửa hàng máy cũ ở Moscow từng bán thân M100 khoảng 25.000 ₽.</li>
+        <li><b>Nếu kèm ống 15-45: vẫn cao.</b> Bộ kit M100 cũ ở cửa hàng khoảng 30.000–42.000 ₽; mức trên 41.000 ₽ chỉ dành cho máy 10/10 còn hộp. Cùng tiền có thể mua Canon R100 kit <i>mới</i> khoảng 41.500 ₽ (có kính ngắm, ngàm RF, bảo hành).</li>
+        <li><b>Giá hợp lý:</b> khoảng 30.000–35.000 ₽ cho bộ kit đẹp, 20.000–28.000 ₽ nếu chỉ thân.</li>
+      </ul>
+      <p class="verdict bad">Không nên mua ở giá này. Nếu vẫn thích, trả giá về 30–35 nghìn và hỏi số lần chụp.</p>
+    </div>
+    <div class="card ex2">
+      <p class="lbl2">Tin rao ở Việt Nam</p>
+      <h4>Canon EOS R50 + RF-S 18-45 cũ, giá 16 triệu</h4>
+      <ul>
+        <li><b>Máy cũ ở cửa hàng:</b> 15–15,5 triệu (ví dụ Máy Ảnh City 15,49 triệu, đủ hộp, có bảo hành cửa hàng).</li>
+        <li><b>Máy mới chính hãng:</b> 17,49 triệu (zShop), 17,89 triệu (Bình Minh Digital).</li>
+        <li><b>Nhận xét:</b> 16 triệu cao hơn mặt bằng máy cũ và chỉ kém máy mới khoảng 1,5 triệu.</li>
+      </ul>
+      <p class="verdict mid">Trả giá về khoảng 14,5–15 triệu. Nếu người bán không bớt, cân nhắc thêm tiền mua máy mới có bảo hành.</p>
+    </div>
+  </div>
+  <details class="src"><summary>Nguồn giá đã xem</summary><ul id="buySrc"></ul></details>
+</div></section>
+<hr class="rule">
+
 <section class="chap" id="mua"><div class="wrap">
   <header><h2>Đi xem máy cũ: danh sách kiểm tra</h2><p>Mang trang này theo khi đi xem máy. Có hai chỗ để đánh dấu: ô xanh ở từng bộ phận phía trên, và danh sách bên dưới. Đánh dấu chỉ lưu trong trình duyệt trên máy bạn đang dùng.</p></header>
   <div class="card tally">
@@ -139,6 +191,7 @@
 <script src="js/data-body.js"></script>
 <script src="js/data-other.js"></script>
 <script src="js/glossary-data.js"></script>
+<script src="js/data-buy.js"></script>
 <script src="js/real-photos.js"></script>
 <script src="js/sim.js"></script>
 <script src="js/app.js"></script>

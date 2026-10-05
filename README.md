@@ -53,6 +53,7 @@ js/camera-art.js        sơ đồ vector + phóng to từng bộ phận
 js/data-body.js         nội dung: mặt trên, trước, sau, cổng
 js/data-other.js        nội dung: đáy máy, lens, màn hình, phụ kiện, checklist
 js/glossary-data.js     từ điển và bài kiểm tra
+js/data-buy.js          chọn máy 15–20 triệu: giá tham khảo (sửa số ở đây khi giá đổi)
 js/sim.js               phòng thí nghiệm ảnh
 js/app.js               ghép trang
 assets/real/            ảnh thật

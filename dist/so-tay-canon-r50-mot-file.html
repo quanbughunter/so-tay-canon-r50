@@ -57,7 +57,7 @@ p{margin:.6em 0}
 .mgroup a{display:block;color:#e8ecf0;text-decoration:none;padding:9px 10px;border-radius:6px;font-size:1rem}
 .mgroup a:hover{background:#2a3039}
 .mgroup a[aria-current]{background:#2a3039;box-shadow:inset 3px 0 0 var(--amber);color:#fff}
-@media(max-width:1020px){
+@media(max-width:1120px){
   .mainnav{display:none}
   .here{display:block;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#c9d1da;font-size:.95rem;padding-left:12px;border-left:1px solid #3d4552}
   .menu .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -318,13 +318,67 @@ tr:last-child td{border-bottom:0}
 .lab>*{min-width:0}
 .row.two select{min-width:0;width:100%}
 
+/* ===== chọn máy 15–20 triệu ===== */
+h3.sub{margin:26px 0 8px}
+.bgroup+.bgroup{margin-top:8px}
+.bgroup>p{margin:0 0 12px}
+.buygrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.buy{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:8px;border-top:5px solid var(--ok)}
+.buy.video{border-top-color:#5b7fa6}
+.buy.khong{border-top-color:#9aa4b0;background:#f8f9fa}
+.buy header{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.buy h4{margin:0;font-size:1.35rem}
+.buy .yr{font:600 .95rem var(--head);color:var(--steel);white-space:nowrap}
+.buy .kit{margin:-6px 0 0;color:var(--steel);font-size:.92rem}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:.78rem;line-height:1.3;padding:3px 8px;border-radius:99px;background:#eef1f4;color:#2c333c}
+.tag.ok{background:#dff1e6;color:#0f5c39}
+.tag.bad{background:#fbe0dd;color:#8c1d14}
+.price{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:2px 0;padding:8px 10px;background:#f4f6f8;border-radius:8px}
+.price dt{font-weight:600;color:var(--steel);font-size:.9rem}
+.price dd{margin:0;font-weight:600}
+.price dd small{font-weight:400;color:var(--steel)}
+.pc{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:.94rem;line-height:1.5}
+.pc li{padding-left:22px;position:relative}
+.pc li::before{position:absolute;left:0;top:0;font-weight:700}
+.pc .p::before{content:"+";color:var(--ok)}
+.pc .c::before{content:"−";color:var(--signal)}
+.fit{margin:auto 0 0;padding-top:8px;border-top:1px solid var(--rule);font-size:.93rem}
+.rules{margin:0;padding-left:22px;display:grid;gap:8px}
+.conv h4{margin-bottom:10px}
+.cvrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cvrow label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:.9rem}
+.cvrow input{font:inherit;font-weight:400;padding:9px 10px;border:1px solid #aeb6c0;border-radius:6px;width:100%;min-width:0;background:#fff}
+.cvrate{display:flex;align-items:center;gap:6px;font-weight:400}
+.cvout{font-size:1.25rem;margin:14px 0 4px}
+.cvout b{font:700 1.6rem var(--head);color:var(--ink)}
+.ex2 h4{font-size:1.3rem}
+.ex2 h4 .muted{font:400 1rem var(--body)}
+.ex2 ul{padding-left:20px;margin:6px 0 10px;display:grid;gap:6px}
+.lbl2{margin:0 0 4px;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--steel);font-weight:600}
+.verdict{margin:0;padding:10px 12px;border-radius:0 8px 8px 0;border-left:5px solid;font-weight:600}
+.verdict.bad{border-color:var(--signal);background:#fbe0dd55}
+.verdict.mid{border-color:#c98a00;background:#fff4d6}
+details.src{margin:16px 0 0;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:10px 14px}
+details.src summary{cursor:pointer;font-weight:600}
+details.src ul{margin:8px 0 0;padding-left:20px;font-size:.92rem}
+@media(max-width:860px){
+  .buygrid{grid-template-columns:1fr}
+  #buyTable tr{display:block;padding:8px 12px}
+  #buyTable td{display:inline;font-size:.92rem;font-weight:400}
+  #buyTable td:first-child{display:block;font-size:1rem;margin-bottom:2px}
+  #buyTable td:nth-child(n+2)::before{content:attr(data-l) ": ";color:var(--steel);font-weight:600}
+  #buyTable td:nth-child(n+2):not(:last-child)::after{content:" · ";color:var(--steel)}
+}
+@media(max-width:420px){.cvrow{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
 <div class="bar" id="bar"><div class="wrap">
   <a class="brand" href="#top"><i>Sổ tay </i><span>Canon R50</span></a>
   <nav class="mainnav" aria-label="Các phần chính">
-    <a href="#ten">Tên máy</a><a href="#tren" data-group="parts">Bộ phận</a><a href="#lab-sec">Thí nghiệm</a><a href="#hoc">Học chụp</a><a href="#mua">Mua máy cũ</a><a href="#tu-dien">Từ điển</a><a href="#quiz-sec">Kiểm tra</a>
+    <a href="#ten">Tên máy</a><a href="#tren" data-group="parts">Bộ phận</a><a href="#lab-sec">Thí nghiệm</a><a href="#hoc">Học chụp</a><a href="#chon-may">Chọn máy</a><a href="#mua">Mua máy cũ</a><a href="#tu-dien">Từ điển</a><a href="#quiz-sec">Kiểm tra</a>
   </nav>
   <span class="here" id="here"></span>
   <button class="menubtn" id="menubtn" type="button" aria-expanded="false" aria-controls="menu"><span class="burger" aria-hidden="true"></span>Mục lục</button>
@@ -398,6 +452,58 @@ tr:last-child td{border-bottom:0}
       <tr><td>Máy quay</td><td>Chế độ quay phim</td><td>Tùy loại</td><td>Quay video tự động hoặc chỉnh tay.</td></tr>
     </tbody></table></div>
   <p class="muted small" style="margin-top:8px">Lộ trình dễ nhất: A+ vài ngày, rồi Av với ISO tự động, rồi Tv khi chụp chuyển động, sau cùng M.</p>
+</div></section>
+<hr class="rule">
+
+<section class="chap" id="chon-may"><div class="wrap">
+  <header><h2>Chọn máy cho người mới: tầm 15–20 triệu</h2><p>Trọn bộ thân máy + ống kính đi kèm (kit). Giá là giá tham khảo ở cửa hàng tại Việt Nam, xem ngày <b id="buyAsof"></b>; giá đổi theo khuyến mãi từng tuần, hãy kiểm tra lại trước khi trả tiền. Dòng “Ở Moscow” là giá cửa hàng ở Nga, nếu tìm được.</p></header>
+  <div id="buy"></div>
+  <h3 class="sub">So sánh nhanh</h3>
+  <div class="tscroll"><table class="stack" id="buyTable"></table></div>
+  <h3 class="sub">Cách định giá một tin bán</h3>
+  <div class="two">
+    <div class="card"><ol class="rules">
+      <li><b>Hỏi rõ bán gì:</b> chỉ thân máy hay cả ống kính, mấy pin, có sạc, hộp, hóa đơn không. Cùng một tên máy, chênh nhau vài triệu chỉ vì thiếu ống.</li>
+      <li><b>Đặt giá cạnh ba mốc:</b> giá máy cũ ở cửa hàng, giá tin rao cá nhân, giá máy mới (bảng ở trên).</li>
+      <li><b>Máy cũ chỉ rẻ hơn máy mới 1–2 triệu</b> thì mua mới, có bảo hành chính hãng, thường lợi hơn.</li>
+      <li><b>“97%”, “like new” là người bán tự chấm</b>, không phải tiêu chuẩn nào. Hỏi số lần chụp (shutter count) và xin ảnh chụp thật của chính chiếc máy.</li>
+      <li><b>Máy thuộc hệ đã dừng</b> (Canon EF-M: M100, M200, M50) phải rẻ hơn hẳn mới đáng mua, vì sau này không có ống kính mới.</li>
+      <li><b>Mua của người lạ</b> thường rẻ hơn cửa hàng nhưng không có bảo hành: kiểm tra kỹ theo <a href="#mua">danh sách mua máy cũ</a>.</li>
+    </ol></div>
+    <div class="card conv">
+      <h4>Đổi giá rúp sang tiền Việt</h4>
+      <div class="cvrow">
+        <label>Giá rao (₽)<input type="number" id="cvRub" inputmode="numeric" min="0" step="500" value="45000"></label>
+        <label>Tỷ giá: 1 ₽ =<span class="cvrate"><input type="number" id="cvRate" inputmode="decimal" min="0" step="1"> đ</span></label>
+      </div>
+      <p class="cvout" id="cvOut"></p>
+      <p class="small muted" id="cvNote"></p>
+    </div>
+  </div>
+  <h3 class="sub">Hai ví dụ định giá</h3>
+  <div class="two">
+    <div class="card ex2">
+      <p class="lbl2">Tin rao ở Moscow</p>
+      <h4>Canon EOS M100 “97%”, giá 45.000 ₽ <span class="muted">(≈ <span data-rub="45000"></span>)</span></h4>
+      <ul>
+        <li><b>Nếu chỉ có thân máy: đắt.</b> Cửa hàng máy cũ ở Moscow từng bán thân M100 khoảng 25.000 ₽.</li>
+        <li><b>Nếu kèm ống 15-45: vẫn cao.</b> Bộ kit M100 cũ ở cửa hàng khoảng 30.000–42.000 ₽; mức trên 41.000 ₽ chỉ dành cho máy 10/10 còn hộp. Cùng tiền có thể mua Canon R100 kit <i>mới</i> khoảng 41.500 ₽ (có kính ngắm, ngàm RF, bảo hành).</li>
+        <li><b>Giá hợp lý:</b> khoảng 30.000–35.000 ₽ cho bộ kit đẹp, 20.000–28.000 ₽ nếu chỉ thân.</li>
+      </ul>
+      <p class="verdict bad">Không nên mua ở giá này. Nếu vẫn thích, trả giá về 30–35 nghìn và hỏi số lần chụp.</p>
+    </div>
+    <div class="card ex2">
+      <p class="lbl2">Tin rao ở Việt Nam</p>
+      <h4>Canon EOS R50 + RF-S 18-45 cũ, giá 16 triệu</h4>
+      <ul>
+        <li><b>Máy cũ ở cửa hàng:</b> 15–15,5 triệu (ví dụ Máy Ảnh City 15,49 triệu, đủ hộp, có bảo hành cửa hàng).</li>
+        <li><b>Máy mới chính hãng:</b> 17,49 triệu (zShop), 17,89 triệu (Bình Minh Digital).</li>
+        <li><b>Nhận xét:</b> 16 triệu cao hơn mặt bằng máy cũ và chỉ kém máy mới khoảng 1,5 triệu.</li>
+      </ul>
+      <p class="verdict mid">Trả giá về khoảng 14,5–15 triệu. Nếu người bán không bớt, cân nhắc thêm tiền mua máy mới có bảo hành.</p>
+    </div>
+  </div>
+  <details class="src"><summary>Nguồn giá đã xem</summary><ul id="buySrc"></ul></details>
 </div></section>
 <hr class="rule">
 
@@ -1073,6 +1179,89 @@ window.QUIZ = [
 
 </script>
 <script>
+/* Chọn máy cho người mới, tầm 15–20 triệu cho bộ thân + ống kit.
+   GIÁ THAM KHẢO, xem ngày 05/10/2026. Giá đổi theo khuyến mãi từng tuần: kiểm tra lại trước khi mua.
+   Đơn vị: triệu đồng (tr) cho Việt Nam, rúp (₽) cho Moscow.
+   Muốn cập nhật: sửa số trong mảng BUY.models rồi chạy lại build_single.py. */
+window.BUY = {
+  asof: '05/10/2026',
+  rub: 307,            // 1 ₽ ≈ 307 đ (tỷ giá chính thức Ngân hàng Trung ương Nga ngày 03/10/2026: 10.000 đ = 32,57 ₽)
+  rubSrc: 'Ngân hàng Trung ương Nga, 03/10/2026',
+  groups: [
+    { id: 'nen', title: 'Nên mua', note: 'Có kính ngắm, ngàm ống kính còn được phát triển, giá vừa túi tiền.' },
+    { id: 'video', title: 'Hợp quay video hơn chụp ảnh', note: 'Không có kính ngắm. Chụp ngoài nắng phải nhìn màn hình, khó hơn cho người học chụp ảnh.' },
+    { id: 'khong', title: 'Không khuyên cho người mới lúc này', note: 'Hệ máy đã dừng phát triển, hoặc vượt ngân sách.' }
+  ],
+  models: [
+    { g: 'nen', name: 'Canon EOS R50', kit: 'RF-S 18-45mm', year: 2023, evf: true, screen: 'Xoay lật, cảm ứng', mount: 'RF (Canon đang phát triển)', alive: true,
+      vnNew: [17.49, 17.89], vnUsed: [15.0, 15.5], ru: 'Mới khoảng 60.000 ₽ (Pixel24)',
+      pros: ['Cân bằng nhất cho người mới: kính ngắm, màn xoay cảm ứng, lấy nét nhận diện mắt/người tốt', 'Menu có chế độ hướng dẫn, dễ học', 'Sổ tay này viết cho chính máy này'],
+      cons: ['Pin LP-E17 nhỏ, nên mua thêm 1 pin', 'Không chống rung trên thân (chỉ có IS trong ống kit)'],
+      fit: 'Người mới muốn học chụp ảnh lẫn quay phim, không muốn đổi máy sớm.' },
+    { g: 'nen', name: 'Sony A6400', kit: 'E 16-50mm PZ', year: 2019, evf: true, screen: 'Lật lên 180°, cảm ứng hạn chế', mount: 'E (rất nhiều ống kính, kể cả hãng thứ ba)', alive: true,
+      vnNew: [18.99, 18.99], vnUsed: [12.5, 17.5], ru: null,
+      pros: ['Lấy nét bám chủ thể nhanh nhất nhóm', 'Ngàm E có nhiều ống kính cũ giá rẻ'],
+      cons: ['Pin NP-FW50 nhỏ', 'Ống kit 16-50 cho ảnh bình thường', 'Menu khó hơn Canon với người mới'],
+      fit: 'Người hay chụp trẻ em, thú cưng, thể thao; chịu học menu.' },
+    { g: 'nen', name: 'Canon EOS R100', kit: 'RF-S 18-45mm', year: 2023, evf: true, screen: 'Cố định, không cảm ứng', mount: 'RF (Canon đang phát triển)', alive: true,
+      vnNew: [12.9, 12.99], vnUsed: [10.5, 11.5], ru: 'Mới 41.500–51.600 ₽ (Fotosklad, Pixel24, Onlinetrade)',
+      pros: ['Rẻ nhất mà vẫn có kính ngắm và ngàm RF', 'Tiền dư 4–5 triệu đủ mua thêm ống RF 50mm f/1.8 để xóa phông'],
+      cons: ['Màn hình không xoay, không chạm để lấy nét', 'Quay 4K bị cắt khung, lấy nét chậm', 'Chụp liên tiếp chậm'],
+      fit: 'Chủ yếu chụp ảnh, muốn tiết kiệm để mua thêm ống kính.' },
+    { g: 'nen', name: 'Nikon Z50', kit: 'Z DX 16-50mm VR', year: 2019, evf: true, screen: 'Lật xuống, cảm ứng', mount: 'Z (Nikon đang phát triển)', alive: true,
+      vnNew: [22.49, 22.49], vnUsed: [13, 16], usedNote: 'ước lượng, ít tin bán rõ ràng',
+      ru: null,
+      pros: ['Báng cầm chắc tay, kính ngắm rõ', 'Ống kit 16-50 VR gọn, có chống rung'],
+      cons: ['Mua mới vượt ngân sách; giá máy cũ chênh nhau nhiều', 'Màn lật xuống bị chân máy che', 'Ít ống APS-C giá rẻ hơn Canon/Sony'],
+      fit: 'Người tìm được máy cũ tốt giá dưới 16 triệu.' },
+
+    { g: 'video', name: 'Sony ZV-E10', kit: 'E 16-50mm PZ', year: 2021, evf: false, screen: 'Xoay lật, cảm ứng', mount: 'E', alive: true,
+      vnNew: [16.19, 16.19], vnUsed: [12.9, 13.5], ru: 'Mới khoảng 70.000 ₽ (Pixel24)',
+      pros: ['Có cổng micro, màn xoay ra trước để tự quay', 'Ngàm E nhiều ống kính'],
+      cons: ['Không kính ngắm', 'Méo hình khi lia nhanh (rolling shutter), nóng máy khi quay 4K lâu', 'Pin nhỏ'],
+      fit: 'Người làm vlog, quay TikTok/YouTube là chính.' },
+    { g: 'video', name: 'Nikon Z30', kit: 'Z DX 16-50mm VR', year: 2022, evf: false, screen: 'Xoay lật, cảm ứng', mount: 'Z', alive: true,
+      vnNew: [17.99, 19.19], vnUsed: [17, 17], usedNote: 'rất ít tin bán', ru: 'Mới khoảng 56.000 ₽ (Pixel24)',
+      pros: ['Gọn nhẹ, quay video tốt'],
+      cons: ['Không kính ngắm, pin nhỏ', 'Cùng tiền thì R50 có thêm kính ngắm'],
+      fit: 'Quay video là chính, thích hệ Nikon.' },
+    { g: 'video', name: 'Canon EOS R50 V', kit: 'RF-S 14-30mm PZ', year: 2025, evf: false, screen: 'Xoay lật, cảm ứng', mount: 'RF', alive: true,
+      vnNew: [19.99, 19.99], newNote: 'giá khuyến mãi ở WinWinStore, giá gốc 26,99 tr', vnUsed: null, ru: null,
+      pros: ['Ống kit góc rộng 14 mm hợp tự quay', 'Thiết kế cho quay dọc, livestream'],
+      cons: ['Không kính ngắm', 'Giá chỉ vừa ngân sách khi có khuyến mãi'],
+      fit: 'Người chỉ quay video, cần góc rộng.' },
+
+    { g: 'khong', name: 'Canon EOS M100 / M200 / M50 Mark II', kit: 'EF-M 15-45mm', year: '2017–2020', evf: 'M50 II có, M100/M200 không', screen: 'Lật/xoay, cảm ứng', mount: 'EF-M — Canon đã dừng cả hệ từ 10/2023', alive: false,
+      vnNew: null, vnUsed: [11.5, 16], usedNote: 'M50 Mark II cũ', ru: 'Cửa hàng máy cũ: M100 kit 30.000–42.000 ₽, thân 25.000 ₽; M50 kit 35.000–42.600 ₽',
+      pros: ['Nhỏ, rẻ'],
+      cons: ['Ngàm EF-M không còn ống kính mới; ống RF không lắp được', 'M100: không kính ngắm, không quay 4K, không cổng micro, pin khoảng 295 ảnh', 'Cùng tiền có thể mua R100 mới'],
+      fit: 'Chỉ nên mua khi rất rẻ và chấp nhận không nâng cấp ống kính.' },
+    { g: 'khong', name: 'Fujifilm X-T30 / X-T30 II / X-M5', kit: 'XC 15-45mm', year: '2019–2024', evf: 'X-T30 có, X-M5 không', screen: 'Lật', mount: 'X', alive: true,
+      vnNew: [25.59, 29.5], vnUsed: [19.5, 26], usedNote: 'X-T30 đời đầu cũ 19,5–21,5 tr; X-T30 II cũ khoảng 26 tr', ru: null,
+      pros: ['Màu ảnh (giả lập phim) rất được ưa chuộng'],
+      cons: ['Vượt ngân sách: Fuji cũ ở Việt Nam bị đẩy giá cao'],
+      fit: 'Để dành khi có ngân sách trên 20 triệu.' },
+    { g: 'khong', name: 'Canon R10, Nikon Z50 II, Sony ZV-E10 II', kit: 'kit đi kèm', year: '2022–2024', evf: 'R10, Z50 II có; ZV-E10 II không', screen: '', mount: 'RF / Z / E', alive: true,
+      vnNew: [21.49, 28.46], vnUsed: [19.49, 23.99], ru: null,
+      pros: ['Mạnh hơn R50 một bậc'],
+      cons: ['Vượt ngân sách 15–20 triệu'],
+      fit: 'Khi ngân sách tăng lên 21–28 triệu.' }
+  ],
+  sources: [
+    ['zShop: R50, R100, R10, A6400, Z30, ZV-E10 (mới và cũ)', 'https://zshop.vn/canon-eos-r50-kit-18-45mm.html'],
+    ['Máy Ảnh City: R50 cũ 15,49 tr, Z30 mới', 'https://mayanhcity.com/products/canon-eos-r50-kit-18-45mm-hang-cu-html'],
+    ['Bình Minh Digital: R50 mới', 'https://binhminhdigital.com/canon-eos-r50-kit-18-45mm-is-stm-lbm.html'],
+    ['Kyma: R50, R100, X-T30 III', 'https://kyma.vn/may-anh-canon-eos-r50-kit-rfs18-45mm-f45-63-is-stm.html'],
+    ['Khánh Long: ZV-E10, ZV-E10 II, Z50, Z50 II, X-M5', 'https://khanhlong.com/sony-zv-e10-kit-16-50mm-den-chinh-hang'],
+    ['Máy ảnh Top1, Máy ảnh cũ, Chợ Tốt: giá máy cũ', 'https://www.chotot.com/tags/mua-ban-may-anh-may-quay/may-anh-sony-a6400'],
+    ['Pixel24, FOTOCCCP, Fotosklad (Moscow): giá ở Nga', 'https://pixel24.ru/vcd-1585/catalog.html'],
+    ['Canon dừng hệ EOS M / EF-M (DPReview, 10/2023)', 'https://www.dpreview.com/news/1138973177/canon-officially-discontinues-eos-m-cameras-ef-m-system/'],
+    ['Tỷ giá chính thức rúp (Ngân hàng Trung ương Nga)', 'https://www.cbr.ru/currency_base/daily/']
+  ]
+};
+
+</script>
+<script>
 /* Khi có ảnh thật cận cảnh từng bộ phận (ví dụ người bán gửi), điền vào đây:
    khóa = id của bộ phận (xem data-body.js), giá trị = đường dẫn ảnh trong assets/real/
    Ví dụ:  window.REAL = { menu: 'assets/real/menu.jpg', mode: 'assets/real/mode-dial.jpg' };  */
@@ -1524,6 +1713,31 @@ window.REAL = {};
   };
   tally();
 
+  /* ---------- chọn máy 15–20 triệu ---------- */
+  (function buy() {
+    const B = window.BUY; if (!B) return;
+    const nf = x => String(x).replace('.', ',');
+    const rng = r => !r ? '—' : (r[0] === r[1] ? nf(r[0]) : nf(r[0]) + '–' + nf(r[1])) + ' tr';
+    const evf = m => m.evf === true ? '<span class="tag ok">Có kính ngắm</span>' : m.evf === false ? '<span class="tag bad">Không kính ngắm</span>' : `<span class="tag">${m.evf}</span>`;
+    const card = m => `<article class="buy ${m.g}">
+      <header><h4>${m.name}</h4><span class="yr">${m.year}</span></header>
+      <p class="kit">+ ống ${m.kit}</p>
+      <div class="tags">${evf(m)}${m.screen ? `<span class="tag">Màn: ${m.screen}</span>` : ''}<span class="tag ${m.alive ? '' : 'bad'}">Ngàm ${m.mount}</span></div>
+      <dl class="price"><dt>Mới</dt><dd>${m.vnNew ? rng(m.vnNew) : 'không còn bán'}${m.newNote ? ` <small>(${m.newNote})</small>` : ''}</dd><dt>Cũ</dt><dd>${rng(m.vnUsed)}${m.usedNote ? ` <small>(${m.usedNote})</small>` : ''}</dd>${m.ru ? `<dt>Ở Moscow</dt><dd>${m.ru}</dd>` : ''}</dl>
+      <ul class="pc">${m.pros.map(x => `<li class="p">${x}</li>`).join('')}${m.cons.map(x => `<li class="c">${x}</li>`).join('')}</ul>
+      <p class="fit"><b>Hợp với:</b> ${m.fit}</p></article>`;
+    $('#buyAsof').textContent = B.asof;
+    $('#buy').innerHTML = B.groups.map(g => `<div class="bgroup"><h3 class="sub">${g.title}</h3><p class="muted small">${g.note}</p><div class="buygrid">${B.models.filter(m => m.g === g.id).map(card).join('')}</div></div>`).join('');
+    $('#buyTable').innerHTML = '<thead><tr><th>Máy (kit)</th><th>Kính ngắm</th><th>Ngàm còn phát triển</th><th>Mới</th><th>Cũ</th></tr></thead><tbody>' +
+      B.models.map(m => `<tr><td><b>${m.name}</b></td><td>${m.evf === true ? 'Có' : m.evf === false ? 'Không' : m.evf}</td><td>${m.alive ? 'Có' : 'Không'}</td><td>${m.vnNew ? rng(m.vnNew) : '—'}</td><td>${rng(m.vnUsed)}</td></tr>`).join('') + '</tbody>';
+    $('#buySrc').innerHTML = B.sources.map(([t, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${t}</a></li>`).join('') + `<li>Tỷ giá dùng trong trang: 1 ₽ ≈ ${B.rub} đ (${B.rubSrc}).</li>`;
+    const vnd = rub => { const v = rub * (+$('#cvRate').value || B.rub); return v >= 1e6 ? nf((v / 1e6).toFixed(1)) + ' triệu đ' : Math.round(v).toLocaleString('vi-VN') + ' đ'; };
+    $('#cvRate').value = B.rub;
+    $('#cvNote').textContent = `Tỷ giá chính thức (${B.rubSrc}). Đổi tiền hoặc chuyển khoản thực tế sẽ lệch một chút.`;
+    const conv = () => { const r = +$('#cvRub').value || 0; $('#cvOut').innerHTML = `${r.toLocaleString('vi-VN')} ₽ ≈ <b>${vnd(r)}</b>`; document.querySelectorAll('[data-rub]').forEach(e => e.textContent = vnd(+e.dataset.rub)); };
+    $('#cvRub').oninput = $('#cvRate').oninput = conv; conv();
+  })();
+
   document.querySelectorAll('table.stack').forEach(t => { const hs = [...t.querySelectorAll('thead th')].map(h => h.textContent); t.querySelectorAll('tbody tr').forEach(r => [...r.children].forEach((c, i) => c.dataset.l = hs[i] || '')); });
 
   /* ---------- từ điển ---------- */
@@ -1548,7 +1762,7 @@ window.REAL = {};
     ['Bắt đầu', [['ten', 'Đọc tên máy']]],
     ['Bộ phận máy', FACES],
     ['Thực hành', [['lab-sec', 'Phòng thí nghiệm ảnh'], ['hoc', 'Học chụp']]],
-    ['Khi đi mua', [['mua', 'Mua máy cũ'], ['tu-dien', 'Từ điển viết tắt'], ['quiz-sec', 'Tự kiểm tra']]]
+    ['Khi đi mua', [['chon-may', 'Chọn máy 15–20 triệu'], ['mua', 'Mua máy cũ'], ['tu-dien', 'Từ điển viết tắt'], ['quiz-sec', 'Tự kiểm tra']]]
   ];
   const label = Object.fromEntries(SECS.flatMap(g => g[1]));
   label.top = 'Trang đầu';
