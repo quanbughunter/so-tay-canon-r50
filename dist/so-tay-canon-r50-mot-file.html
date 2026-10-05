@@ -17,7 +17,7 @@
   --r:10px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:74px}
+html{scroll-behavior:smooth;scroll-padding-top:66px}
 body{margin:0;background:var(--sheet);color:var(--ink);font:400 16px/1.7 var(--body);-webkit-text-size-adjust:100%}
 img,svg{max-width:100%}
 a{color:var(--link)}
@@ -35,14 +35,49 @@ p{margin:.6em 0}
 .sr{position:absolute;left:-9999px}
 
 /* ===== thanh điều hướng ===== */
-.bar{position:sticky;top:0;z-index:30;background:rgba(21,24,29,.96);color:#e8ecf0;backdrop-filter:blur(8px)}
-.bar .wrap{display:flex;align-items:center;gap:18px;min-height:52px}
-.bar b{font-family:var(--head);font-size:1.25rem;white-space:nowrap}
-.bar nav{display:flex;gap:2px;overflow:auto;scrollbar-width:none;flex:1}
-.bar nav::-webkit-scrollbar{display:none}
-.bar nav a{color:#c9d1da;text-decoration:none;padding:14px 11px;white-space:nowrap;font-size:.92rem}
-.bar nav a:hover,.bar nav a.on{color:#fff;box-shadow:inset 0 -3px 0 var(--amber)}
-.prog{font-family:var(--head);font-size:1.05rem;color:var(--amber);white-space:nowrap}
+.bar{position:sticky;top:0;z-index:30;background:rgba(21,24,29,.97);color:#e8ecf0}
+.bar>.wrap{display:flex;align-items:center;gap:14px;min-height:52px}
+.brand{font:700 1.25rem var(--head);white-space:nowrap;color:#fff;text-decoration:none;flex:none}
+.brand span{color:var(--amber)}
+.brand i{font-style:normal}
+.mainnav{display:flex;gap:2px;flex:1;min-width:0}
+.mainnav a{color:#c9d1da;text-decoration:none;padding:14px 10px;white-space:nowrap;font-size:.95rem}
+.mainnav a:hover,.mainnav a.on{color:#fff;box-shadow:inset 0 -3px 0 var(--amber)}
+.here{display:none}
+.menubtn{flex:none;display:inline-flex;align-items:center;gap:8px;font:600 .95rem var(--body);color:#fff;background:#2a3039;border:1px solid #3d4552;border-radius:8px;padding:7px 12px;cursor:pointer;min-height:38px}
+.menubtn:hover{background:#343b46}
+.menubtn[aria-expanded=true]{background:var(--amber);color:var(--ink);border-color:var(--amber)}
+.burger,.burger::before,.burger::after{display:block;width:16px;height:2px;background:currentColor;border-radius:2px;position:relative}
+.burger::before,.burger::after{content:"";position:absolute;left:0}
+.burger::before{top:-5px}.burger::after{top:5px}
+.menu{border-top:1px solid #2d333c;background:#1b1f25;max-height:calc(100dvh - 52px);overflow:auto;overscroll-behavior:contain}
+.menu[hidden]{display:none}
+.menu .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 24px;padding:16px 0 20px}
+.mgroup p{margin:0 0 4px;font:600 .78rem var(--body);letter-spacing:.06em;text-transform:uppercase;color:#8b97a5}
+.mgroup a{display:block;color:#e8ecf0;text-decoration:none;padding:9px 10px;border-radius:6px;font-size:1rem}
+.mgroup a:hover{background:#2a3039}
+.mgroup a[aria-current]{background:#2a3039;box-shadow:inset 3px 0 0 var(--amber);color:#fff}
+@media(max-width:1020px){
+  .mainnav{display:none}
+  .here{display:block;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#c9d1da;font-size:.95rem;padding-left:12px;border-left:1px solid #3d4552}
+  .menu .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px){.brand i{display:none}}
+@media(max-width:420px){
+  .brand{font-size:1.15rem}
+  .menu .wrap{grid-template-columns:1fr;gap:4px}
+  .mgroup a{padding:11px 10px}
+}
+
+/* thanh chuyển mặt máy ở đầu mỗi chương bộ phận */
+.facenav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;margin:0 0 18px;padding-bottom:4px}
+.facenav a{flex:none;text-decoration:none;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:99px;padding:5px 13px;font-size:.9rem;white-space:nowrap}
+.facenav a:hover{border-color:var(--ink)}
+.facenav a[aria-current]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* nút lên đầu trang */
+.totop{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:25;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fff;text-decoration:none;font-size:1.3rem;box-shadow:0 6px 18px -6px rgba(0,0,0,.5)}
+.totop[hidden]{display:none}
 
 /* ===== mở đầu ===== */
 .hero{padding:34px 0 18px}
@@ -53,11 +88,15 @@ p{margin:.6em 0}
 .map{position:relative;background:#0f1216;border-radius:14px;padding:10px;box-shadow:0 1px 0 #fff inset,0 18px 40px -22px rgba(0,0,0,.55)}
 .map svg{display:block;width:100%;height:auto}
 .map .tapnote{color:#aab4c0;font-size:.82rem;text-align:center;margin:6px 0 2px}
-.hot{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;border:2px solid var(--amber);background:rgba(255,210,63,.18);cursor:pointer;padding:0}
+.hot{position:absolute;transform:translate(-50%,-50%);width:clamp(18px,5.6%,30px);aspect-ratio:1;border-radius:50%;border:2px solid var(--amber);background:rgba(255,210,63,.18);cursor:pointer;padding:0}
 .hot:hover,.hot:focus-visible{background:rgba(255,210,63,.55)}
 .viewtabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
 .viewtabs button{font:600 .95rem var(--head);letter-spacing:.02em;font-size:1.1rem;border:1px solid #394150;background:#1a1f26;color:#cfd7e0;border-radius:6px;padding:4px 12px;cursor:pointer}
 .viewtabs button[aria-pressed=true]{background:var(--amber);color:#15181d;border-color:var(--amber)}
+.maplist{display:none;flex-wrap:wrap;gap:6px;margin:8px 0 2px;color:#aab4c0}
+.maplist .small{width:100%}
+.maplist button{font:inherit;font-size:.86rem;color:#e8ecf0;background:#1a1f26;border:1px solid #394150;border-radius:99px;padding:5px 11px;cursor:pointer;text-align:left}
+.maplist button:hover{border-color:var(--amber)}
 
 /* ===== chương ===== */
 section.chap{padding:44px 0 10px}
@@ -144,7 +183,7 @@ section.chap{padding:44px 0 10px}
   .plate{padding:14px}
   .plate dl{grid-template-columns:1fr;gap:0}
   .plate dt{margin-top:8px}
-  .bar b{display:none}
+  .maplist{display:flex}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
@@ -168,6 +207,18 @@ tr:last-child td{border-bottom:0}
 .checks label{display:flex;gap:10px;align-items:flex-start;padding:4px 0;cursor:pointer}
 .checks input{width:18px;height:18px;margin-top:5px;accent-color:var(--ok);flex:none}
 .plain{padding-left:20px}
+.tally{border-color:#b9dcc8;background:#f3faf6}
+.tally-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 26px}
+.tal{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center}
+.tal-num{font:700 2.2rem/1 var(--head);color:var(--ok);white-space:nowrap}
+.tal-num span{font-size:1.4rem;color:var(--steel)}
+.tal-txt b{display:block}
+.tal-txt span{display:block;font-size:.9rem;color:#3d4650;line-height:1.5}
+.meter{grid-column:1/-1;height:8px;background:#dde7e1;border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px;transition:width .3s}
+.tally-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn2:disabled{opacity:.55;cursor:default}
+.btn2.warn{border-color:var(--signal);color:var(--signal)}
 .search{width:100%;padding:12px 14px;border:1px solid var(--rule);border-radius:8px;font:inherit;background:var(--paper);margin-bottom:12px}
 .gloss{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .g{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:10px 12px}
@@ -238,9 +289,28 @@ tr:last-child td{border-bottom:0}
 .ex span{font-size:.93rem;color:#2c333c}
 @media(max-width:860px){
   .lab{grid-template-columns:1fr}
-  .lab-view{top:52px}
+  .lab-view{top:52px;background:var(--sheet);margin:0 -14px;padding:6px 14px 8px;box-shadow:0 10px 14px -12px rgba(0,0,0,.35)}
+  .lab-view .note{display:none}
   .two,.checks,.gloss{grid-template-columns:1fr}
-  .row{grid-template-columns:86px 1fr 64px}
+  .row:not(.two){grid-template-columns:1fr auto auto;gap:0 8px;margin:12px 0}
+  .row:not(.two)>label{grid-column:1;grid-row:1}
+  .row:not(.two)>output{grid-column:3;grid-row:1}
+  .row:not(.two)>input[type=range]{grid-column:1/-1;grid-row:2}
+  .row:not(.two) .auto{position:static;grid-column:2;grid-row:1}
+  .tally-grid{grid-template-columns:1fr}
+  .tscroll:has(table.stack){border:0;background:transparent;overflow:visible}
+  table.stack{min-width:0}
+  table.stack thead{display:none}
+  table.stack tbody{display:grid;gap:8px}
+  table.stack tr{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:10px 12px}
+  table.stack td{border:0;padding:0}
+  table.stack td:nth-child(2){font-weight:600;align-self:center}
+  table.stack td:nth-child(n+3){grid-column:1/-1;font-size:.94rem}
+  table.stack td:nth-child(n+3)::before{content:attr(data-l) ": ";color:var(--steel);font-weight:600}
+  .g{padding:9px 11px}
+  .g p{line-height:1.5}
+  section.chap{padding-top:34px}
+  .card{padding:15px}
 }
 
 @media(min-width:861px){.plate>.zoomfig,.plate>.realfig{position:sticky;top:70px}}
@@ -251,21 +321,25 @@ tr:last-child td{border-bottom:0}
 </style>
 </head>
 <body>
-<div class="bar"><div class="wrap">
-  <b>Sổ tay Canon R50</b>
-  <nav aria-label="Mục lục">
-    <a href="#ten">Đọc tên máy</a><a href="#tren">Mặt trên</a><a href="#truoc">Mặt trước</a><a href="#sau">Mặt sau</a><a href="#canh">Cổng</a><a href="#day">Đáy máy</a><a href="#lens">Lens</a><a href="#manhinh">Màn hình</a><a href="#lab-sec">Phòng thí nghiệm</a><a href="#hoc">Học chụp</a><a href="#mua">Mua máy cũ</a><a href="#tu-dien">Từ điển</a><a href="#quiz-sec">Kiểm tra</a>
+<div class="bar" id="bar"><div class="wrap">
+  <a class="brand" href="#top"><i>Sổ tay </i><span>Canon R50</span></a>
+  <nav class="mainnav" aria-label="Các phần chính">
+    <a href="#ten">Tên máy</a><a href="#tren" data-group="parts">Bộ phận</a><a href="#lab-sec">Thí nghiệm</a><a href="#hoc">Học chụp</a><a href="#mua">Mua máy cũ</a><a href="#tu-dien">Từ điển</a><a href="#quiz-sec">Kiểm tra</a>
   </nav>
-  <span class="prog" id="prog" aria-live="polite"></span>
-</div></div>
+  <span class="here" id="here"></span>
+  <button class="menubtn" id="menubtn" type="button" aria-expanded="false" aria-controls="menu"><span class="burger" aria-hidden="true"></span>Mục lục</button>
+</div>
+<div class="menu" id="menu" hidden><div class="wrap" id="menuin"></div></div>
+</div>
 
-<header class="hero"><div class="wrap hero-grid">
+<header class="hero" id="top"><div class="wrap hero-grid">
   <div>
     <h1>Canon EOS R50 từ số 0</h1>
     <p class="lead">Mỗi nút, mỗi chữ in trên máy và trên ống kính đều có một phần riêng: nó là gì, dùng khi nào và cách thử khi bạn mua máy cũ. Chạm vào chấm vàng trên hình để nhảy tới đúng bộ phận.</p>
     <ul class="how">
       <li>Chữ trên nền đen, như <span class="mk">MENU</span>, là chữ thật in trên máy.</li>
       <li>Hình tròn vàng quanh bộ phận là chỗ đang giải thích. Hình nhỏ ở góc cho biết bạn đang xem vùng nào.</li>
+      <li>Mỗi bộ phận có ô xanh <b>Thử khi mua máy cũ</b>. Khi đi xem máy, làm theo hướng dẫn trong ô rồi đánh dấu; số bộ phận đã thử được đếm ở phần <a href="#mua">Mua máy cũ</a>.</li>
       <li>Muốn xem ảnh hưởng của khẩu độ, tốc độ, ISO và tiêu cự, kéo thanh trượt ở <a href="#lab-sec">Phòng thí nghiệm</a>.</li>
     </ul>
   </div>
@@ -273,6 +347,7 @@ tr:last-child td{border-bottom:0}
     <div class="viewtabs" id="viewtabs" role="group" aria-label="Chọn mặt máy"></div>
     <div style="position:relative" id="mapbody"></div>
     <p class="tapnote">Hình vẽ minh họa, vị trí gần đúng. Khi cầm máy thật, hãy tìm đúng chữ in trên nút.</p>
+    <div class="maplist" id="maplist" aria-label="Bộ phận trên mặt này"></div>
   </div>
 </div></header>
 <hr class="rule">
@@ -309,7 +384,7 @@ tr:last-child td{border-bottom:0}
     <div class="card"><h4>Cấu hình khởi đầu gợi ý</h4><p><b>Chụp người ngoài trời:</b> chế độ Av, mở khẩu lớn nhất lens cho phép, ISO tự động, bật nhận diện người/mắt. <b>Phong cảnh:</b> Av, f/8 nếu đủ sáng, ISO 100–400, tiêu cự 18–24 mm. <b>Trong nhà tối:</b> đừng giữ ISO 100; chấp nhận một chút nhiễu để tốc độ đủ nhanh.</p></div>
   </div>
   <h3 style="margin-top:22px">Vòng chọn chế độ (theo hướng dẫn Canon)</h3>
-  <div class="tscroll"><table>
+  <div class="tscroll"><table class="stack">
     <thead><tr><th>Ký hiệu</th><th>Tên</th><th>Bạn điều khiển</th><th>Dùng khi nào</th></tr></thead>
     <tbody>
       <tr><td><span class="mk">A+</span></td><td>Scene Intelligent Auto</td><td>Gần như không</td><td>Mới cầm máy, cần ảnh ngay.</td></tr>
@@ -327,7 +402,25 @@ tr:last-child td{border-bottom:0}
 <hr class="rule">
 
 <section class="chap" id="mua"><div class="wrap">
-  <header><h2>Đi xem máy cũ: danh sách kiểm tra</h2><p>Đánh dấu khi bạn đã kiểm tra. Danh sách được lưu trong trình duyệt của bạn.</p></header>
+  <header><h2>Đi xem máy cũ: danh sách kiểm tra</h2><p>Mang trang này theo khi đi xem máy. Có hai chỗ để đánh dấu: ô xanh ở từng bộ phận phía trên, và danh sách bên dưới. Đánh dấu chỉ lưu trong trình duyệt trên máy bạn đang dùng.</p></header>
+  <div class="card tally">
+    <div class="tally-grid">
+      <div class="tal">
+        <div class="tal-num"><b id="tPartsN">0</b>/<span id="tPartsT">0</span></div>
+        <div class="tal-txt"><b>Bộ phận đã thử</b><span>Đếm các ô xanh “Thử khi mua máy cũ” bạn đã đánh dấu ở từng bộ phận.</span></div>
+        <div class="meter"><i id="tPartsBar"></i></div>
+      </div>
+      <div class="tal">
+        <div class="tal-num"><b id="tCheckN">0</b>/<span id="tCheckT">0</span></div>
+        <div class="tal-txt"><b>Mục trong danh sách</b><span>Đếm các ô bạn đánh dấu trong danh sách kiểm tra ngay dưới đây.</span></div>
+        <div class="meter"><i id="tCheckBar"></i></div>
+      </div>
+    </div>
+    <div class="tally-act">
+      <button class="btn2" id="nextUntested" type="button">Tới bộ phận chưa thử</button>
+      <button class="btn2 ghost" id="resetAll" type="button">Xoá mọi đánh dấu</button>
+    </div>
+  </div>
   <div class="card"><div id="check" class="checks"></div></div>
   <h3 style="margin-top:22px">Phụ kiện đi kèm</h3>
   <ul class="plain" id="acc"></ul>
@@ -350,6 +443,8 @@ tr:last-child td{border-bottom:0}
   <p><b>Nguồn:</b> tên bộ phận và chức năng theo hướng dẫn chính thức của Canon (Advanced User Guide EOS R50), kiểm tra lại với <a href="https://cam.start.canon/" target="_blank" rel="noopener">cam.start.canon</a>. Hình máy ảnh trong trang là sơ đồ minh họa tự vẽ, vị trí gần đúng; phần "Đáy máy" dùng ảnh thật của chiếc máy bạn gửi.</p>
   <p class="muted small">Phòng thí nghiệm ảnh là mô phỏng để học khái niệm, không thay thế việc tự chụp thử.</p>
 </div></footer>
+
+<a class="totop" id="totop" href="#top" aria-label="Lên đầu trang" hidden>↑</a>
 
 <script>
 /* Sơ đồ minh họa Canon EOS R50 + RF-S 18-45 (vẽ lại bằng vector, KHÔNG phải ảnh chụp).
@@ -1333,7 +1428,7 @@ window.REAL = {};
     const real = (window.REAL || {})[p.id];
     if (p.real || real) {
       const src = p.real || real;
-      return `<figure class="realfig"><img loading="lazy" src="${src}" alt="${p.name}"><span class="badge">ảnh thật</span>${p.realCap ? `<figcaption>${p.realCap}</figcaption>` : ''}</figure>`;
+      return `<figure class="realfig"><img decoding="async" src="${src}" alt="${p.name}"><span class="badge">ảnh thật</span>${p.realCap ? `<figcaption>${p.realCap}</figcaption>` : ''}</figure>`;
     }
     if (p.art) return ART.zoom(p.art[0], p.art[1], { alt: 'Hình phóng to: ' + p.name }).replace('<div class="zoomfig">', '<div class="zoomfig"><span class="badge">hình minh họa</span>');
     return '';
@@ -1347,8 +1442,12 @@ window.REAL = {};
       ${p.test ? `<div class="try" data-id="${p.id}"><label><input type="checkbox"><span><b>Thử khi mua máy cũ:</b> ${p.test}</span></label></div>` : ''}
     </div></article>`;
   }
+  const FACES = [['tren', 'Mặt trên'], ['truoc', 'Mặt trước'], ['sau', 'Mặt sau'], ['canh', 'Cổng'], ['day', 'Đáy máy'], ['lens', 'Lens'], ['manhinh', 'Màn hình']];
+  function facenav(cur) {
+    return `<nav class="facenav" aria-label="Chuyển sang mặt máy khác">${FACES.map(([id, n]) => `<a href="#${id}"${id === cur ? ' aria-current="true"' : ''}>${n}</a>`).join('')}</nav>`;
+  }
   function chapter(c) {
-    return `<section class="chap" id="${c.id}"><div class="wrap"><header><h2>${c.title}</h2><p>${c.intro}</p></header>${c.plates.map(plate).join('')}</div></section><hr class="rule">`;
+    return `<section class="chap" id="${c.id}"><div class="wrap">${facenav(c.id)}<header><h2>${c.title}</h2><p>${c.intro}</p></header>${c.plates.map(plate).join('')}</div></section><hr class="rule">`;
   }
   const all = [...window.CHAPTERS, ...window.CHAPTERS2];
   const byId = Object.fromEntries(all.flatMap(c => c.plates).map(p => [p.id, p]));
@@ -1370,18 +1469,22 @@ window.REAL = {};
       h += `<button class="hot" style="left:${(cx / m.w * 100).toFixed(2)}%;top:${(cy / m.h * 100).toFixed(2)}%" data-go="p-${p.id}" aria-label="${p.name}" title="${p.name}"></button>`;
     });
     $('#mapbody').innerHTML = h;
+    const seen = new Set();
+    $('#maplist').innerHTML = '<span class="small">Hoặc chọn trong danh sách:</span>' + Object.keys(m.box).map(k => keyToPlate[v + '.' + k]).filter(p => p && !seen.has(p.id) && seen.add(p.id)).map(p => `<button type="button" data-go="p-${p.id}">${p.name.replace(/\s*\(.*?\)\s*/g, ' ').trim()}</button>`).join('');
+  }
+  function go(id) {
+    const t = document.getElementById(id); if (!t) return;
+    t.scrollIntoView({ behavior: 'smooth', block: 'start' }); t.classList.add('flash'); setTimeout(() => t.classList.remove('flash'), 1600);
   }
   $('#viewtabs').innerHTML = views.map(([v, n], i) => `<button data-v="${v}" aria-pressed="${i === 0}">${n}</button>`).join('');
   $('#viewtabs').onclick = e => { const b = e.target.closest('button'); if (!b) return; document.querySelectorAll('#viewtabs button').forEach(x => x.setAttribute('aria-pressed', x === b)); drawMap(b.dataset.v); };
-  $('#mapbody').onclick = e => { const b = e.target.closest('[data-go]'); if (!b) return; const t = document.getElementById(b.dataset.go); if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); t.classList.add('flash'); setTimeout(() => t.classList.remove('flash'), 1600); } };
+  $('#mapbody').onclick = $('#maplist').onclick = e => { const b = e.target.closest('[data-go]'); if (b) go(b.dataset.go); };
   drawMap('back');
 
-  /* ---------- tick "đã thử" + tiến độ ---------- */
+  /* ---------- ô xanh "Thử khi mua máy cũ" ở từng bộ phận ---------- */
   const done = new Set(store.get('r50-tested', []));
   const tries = [...document.querySelectorAll('.try')];
-  function progress() { $('#prog').textContent = `Đã thử ${done.size}/${tries.length}`; }
-  tries.forEach(t => { const cb = t.querySelector('input'), id = t.dataset.id; cb.checked = done.has(id); t.classList.toggle('done', cb.checked); cb.onchange = () => { cb.checked ? done.add(id) : done.delete(id); t.classList.toggle('done', cb.checked); store.set('r50-tested', [...done]); progress(); }; });
-  progress();
+  tries.forEach(t => { const cb = t.querySelector('input'), id = t.dataset.id; cb.checked = done.has(id); t.classList.toggle('done', cb.checked); cb.onchange = () => { cb.checked ? done.add(id) : done.delete(id); t.classList.toggle('done', cb.checked); store.set('r50-tested', [...done]); tally(); }; });
 
   /* ---------- tên máy ---------- */
   const NAMES = {
@@ -1400,7 +1503,28 @@ window.REAL = {};
   $('#acc').innerHTML = window.ACCESSORIES.map(a => `<li><b>${a[0]}.</b> ${a[1]}</li>`).join('');
   const ck = new Set(store.get('r50-check', [])); let n = 0;
   $('#check').innerHTML = window.CHECK.map(([t, items]) => `<fieldset><legend>${t}</legend>${items.map(i => { const id = 'c' + (n++); return `<label><input type="checkbox" data-c="${id}" ${ck.has(id) ? 'checked' : ''}> <span>${i}</span></label>`; }).join('')}</fieldset>`).join('');
-  $('#check').onchange = e => { const id = e.target.dataset.c; if (!id) return; e.target.checked ? ck.add(id) : ck.delete(id); store.set('r50-check', [...ck]); };
+  $('#check').onchange = e => { const id = e.target.dataset.c; if (!id) return; e.target.checked ? ck.add(id) : ck.delete(id); store.set('r50-check', [...ck]); tally(); };
+  function tally() {
+    const nP = tries.filter(t => done.has(t.dataset.id)).length, tP = tries.length;
+    const nC = document.querySelectorAll('#check input:checked').length, tC = n;
+    $('#tPartsN').textContent = nP; $('#tPartsT').textContent = tP; $('#tPartsBar').style.width = (tP ? nP / tP * 100 : 0) + '%';
+    $('#tCheckN').textContent = nC; $('#tCheckT').textContent = tC; $('#tCheckBar').style.width = (tC ? nC / tC * 100 : 0) + '%';
+    $('#nextUntested').disabled = nP === tP;
+    $('#nextUntested').textContent = nP === tP ? 'Đã thử đủ mọi bộ phận' : 'Tới bộ phận chưa thử';
+  }
+  $('#nextUntested').onclick = () => { const t = tries.find(x => !done.has(x.dataset.id)); if (t) go(t.closest('.plate').id); };
+  let armed = 0;
+  $('#resetAll').onclick = e => {
+    const b = e.currentTarget;
+    if (!armed) { armed = setTimeout(() => { armed = 0; b.textContent = 'Xoá mọi đánh dấu'; b.classList.remove('warn'); }, 4000); b.textContent = 'Bấm lần nữa để xoá'; b.classList.add('warn'); return; }
+    clearTimeout(armed); armed = 0; b.textContent = 'Xoá mọi đánh dấu'; b.classList.remove('warn');
+    done.clear(); ck.clear(); store.set('r50-tested', []); store.set('r50-check', []);
+    tries.forEach(t => { t.querySelector('input').checked = false; t.classList.remove('done'); });
+    document.querySelectorAll('#check input').forEach(i => i.checked = false); tally();
+  };
+  tally();
+
+  document.querySelectorAll('table.stack').forEach(t => { const hs = [...t.querySelectorAll('thead th')].map(h => h.textContent); t.querySelectorAll('tbody tr').forEach(r => [...r.children].forEach((c, i) => c.dataset.l = hs[i] || '')); });
 
   /* ---------- từ điển ---------- */
   function gloss(q = '') { const t = q.toLowerCase().trim(); $('#gl').innerHTML = window.GLOSS.filter(g => !t || g.join(' ').toLowerCase().includes(t)).map(g => `<div class="g"><span class="mk">${g[0]}</span> <b>${g[1]}</b><p>${g[2]}</p></div>`).join('') || '<p class="muted">Không thấy thuật ngữ này.</p>'; }
@@ -1419,10 +1543,38 @@ window.REAL = {};
   /* ---------- phòng thí nghiệm ---------- */
   SIM.mount($('#lab'));
 
-  /* ---------- đánh dấu mục đang xem ---------- */
-  const links = [...document.querySelectorAll('.bar nav a')];
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id)); } }), { rootMargin: '-40% 0px -55% 0px' });
-  links.forEach(l => { const t = document.querySelector(l.getAttribute('href')); if (t) io.observe(t); });
+  /* ---------- mục lục ---------- */
+  const SECS = [
+    ['Bắt đầu', [['ten', 'Đọc tên máy']]],
+    ['Bộ phận máy', FACES],
+    ['Thực hành', [['lab-sec', 'Phòng thí nghiệm ảnh'], ['hoc', 'Học chụp']]],
+    ['Khi đi mua', [['mua', 'Mua máy cũ'], ['tu-dien', 'Từ điển viết tắt'], ['quiz-sec', 'Tự kiểm tra']]]
+  ];
+  const label = Object.fromEntries(SECS.flatMap(g => g[1]));
+  label.top = 'Trang đầu';
+  $('#menuin').innerHTML = SECS.map(([g, items]) => `<div class="mgroup"><p>${g}</p>${items.map(([id, n]) => `<a href="#${id}" data-sec="${id}">${n}</a>`).join('')}</div>`).join('');
+  const menu = $('#menu'), mbtn = $('#menubtn');
+  function openMenu(o) { menu.hidden = !o; mbtn.setAttribute('aria-expanded', o); document.body.classList.toggle('menu-open', o); }
+  mbtn.onclick = () => openMenu(menu.hidden);
+  menu.onclick = e => { if (e.target.closest('a')) openMenu(false); };
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) { openMenu(false); mbtn.focus(); } });
+  document.addEventListener('click', e => { if (!menu.hidden && !e.target.closest('#bar')) openMenu(false); });
+
+  /* ---------- đánh dấu phần đang xem ---------- */
+  const PARTS = new Set(FACES.map(f => f[0]));
+  const navLinks = [...document.querySelectorAll('.mainnav a')], menuLinks = [...document.querySelectorAll('#menuin a')];
+  function setCurrent(id) {
+    navLinks.forEach(l => l.classList.toggle('on', l.dataset.group === 'parts' ? PARTS.has(id) : l.getAttribute('href') === '#' + id));
+    menuLinks.forEach(l => l.toggleAttribute('aria-current', l.dataset.sec === id));
+    $('#here').textContent = id === 'top' ? '' : (label[id] || '');
+  }
+  const watched = ['top', ...SECS.flatMap(g => g[1].map(i => i[0]))].map(id => document.getElementById(id)).filter(Boolean);
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setCurrent(e.target.id); }), { rootMargin: '-35% 0px -60% 0px' });
+  watched.forEach(t => io.observe(t));
+
+  const totop = $('#totop');
+  const onScroll = () => { totop.hidden = scrollY < innerHeight * 1.5; };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
 })();
 
 </script>

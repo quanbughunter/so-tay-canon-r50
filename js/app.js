@@ -11,7 +11,7 @@
     const real = (window.REAL || {})[p.id];
     if (p.real || real) {
       const src = p.real || real;
-      return `<figure class="realfig"><img loading="lazy" src="${src}" alt="${p.name}"><span class="badge">ảnh thật</span>${p.realCap ? `<figcaption>${p.realCap}</figcaption>` : ''}</figure>`;
+      return `<figure class="realfig"><img decoding="async" src="${src}" alt="${p.name}"><span class="badge">ảnh thật</span>${p.realCap ? `<figcaption>${p.realCap}</figcaption>` : ''}</figure>`;
     }
     if (p.art) return ART.zoom(p.art[0], p.art[1], { alt: 'Hình phóng to: ' + p.name }).replace('<div class="zoomfig">', '<div class="zoomfig"><span class="badge">hình minh họa</span>');
     return '';
@@ -25,8 +25,12 @@
       ${p.test ? `<div class="try" data-id="${p.id}"><label><input type="checkbox"><span><b>Thử khi mua máy cũ:</b> ${p.test}</span></label></div>` : ''}
     </div></article>`;
   }
+  const FACES = [['tren', 'Mặt trên'], ['truoc', 'Mặt trước'], ['sau', 'Mặt sau'], ['canh', 'Cổng'], ['day', 'Đáy máy'], ['lens', 'Lens'], ['manhinh', 'Màn hình']];
+  function facenav(cur) {
+    return `<nav class="facenav" aria-label="Chuyển sang mặt máy khác">${FACES.map(([id, n]) => `<a href="#${id}"${id === cur ? ' aria-current="true"' : ''}>${n}</a>`).join('')}</nav>`;
+  }
   function chapter(c) {
-    return `<section class="chap" id="${c.id}"><div class="wrap"><header><h2>${c.title}</h2><p>${c.intro}</p></header>${c.plates.map(plate).join('')}</div></section><hr class="rule">`;
+    return `<section class="chap" id="${c.id}"><div class="wrap">${facenav(c.id)}<header><h2>${c.title}</h2><p>${c.intro}</p></header>${c.plates.map(plate).join('')}</div></section><hr class="rule">`;
   }
   const all = [...window.CHAPTERS, ...window.CHAPTERS2];
   const byId = Object.fromEntries(all.flatMap(c => c.plates).map(p => [p.id, p]));
@@ -48,18 +52,22 @@
       h += `<button class="hot" style="left:${(cx / m.w * 100).toFixed(2)}%;top:${(cy / m.h * 100).toFixed(2)}%" data-go="p-${p.id}" aria-label="${p.name}" title="${p.name}"></button>`;
     });
     $('#mapbody').innerHTML = h;
+    const seen = new Set();
+    $('#maplist').innerHTML = '<span class="small">Hoặc chọn trong danh sách:</span>' + Object.keys(m.box).map(k => keyToPlate[v + '.' + k]).filter(p => p && !seen.has(p.id) && seen.add(p.id)).map(p => `<button type="button" data-go="p-${p.id}">${p.name.replace(/\s*\(.*?\)\s*/g, ' ').trim()}</button>`).join('');
+  }
+  function go(id) {
+    const t = document.getElementById(id); if (!t) return;
+    t.scrollIntoView({ behavior: 'smooth', block: 'start' }); t.classList.add('flash'); setTimeout(() => t.classList.remove('flash'), 1600);
   }
   $('#viewtabs').innerHTML = views.map(([v, n], i) => `<button data-v="${v}" aria-pressed="${i === 0}">${n}</button>`).join('');
   $('#viewtabs').onclick = e => { const b = e.target.closest('button'); if (!b) return; document.querySelectorAll('#viewtabs button').forEach(x => x.setAttribute('aria-pressed', x === b)); drawMap(b.dataset.v); };
-  $('#mapbody').onclick = e => { const b = e.target.closest('[data-go]'); if (!b) return; const t = document.getElementById(b.dataset.go); if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); t.classList.add('flash'); setTimeout(() => t.classList.remove('flash'), 1600); } };
+  $('#mapbody').onclick = $('#maplist').onclick = e => { const b = e.target.closest('[data-go]'); if (b) go(b.dataset.go); };
   drawMap('back');
 
-  /* ---------- tick "đã thử" + tiến độ ---------- */
+  /* ---------- ô xanh "Thử khi mua máy cũ" ở từng bộ phận ---------- */
   const done = new Set(store.get('r50-tested', []));
   const tries = [...document.querySelectorAll('.try')];
-  function progress() { $('#prog').textContent = `Đã thử ${done.size}/${tries.length}`; }
-  tries.forEach(t => { const cb = t.querySelector('input'), id = t.dataset.id; cb.checked = done.has(id); t.classList.toggle('done', cb.checked); cb.onchange = () => { cb.checked ? done.add(id) : done.delete(id); t.classList.toggle('done', cb.checked); store.set('r50-tested', [...done]); progress(); }; });
-  progress();
+  tries.forEach(t => { const cb = t.querySelector('input'), id = t.dataset.id; cb.checked = done.has(id); t.classList.toggle('done', cb.checked); cb.onchange = () => { cb.checked ? done.add(id) : done.delete(id); t.classList.toggle('done', cb.checked); store.set('r50-tested', [...done]); tally(); }; });
 
   /* ---------- tên máy ---------- */
   const NAMES = {
@@ -78,7 +86,28 @@
   $('#acc').innerHTML = window.ACCESSORIES.map(a => `<li><b>${a[0]}.</b> ${a[1]}</li>`).join('');
   const ck = new Set(store.get('r50-check', [])); let n = 0;
   $('#check').innerHTML = window.CHECK.map(([t, items]) => `<fieldset><legend>${t}</legend>${items.map(i => { const id = 'c' + (n++); return `<label><input type="checkbox" data-c="${id}" ${ck.has(id) ? 'checked' : ''}> <span>${i}</span></label>`; }).join('')}</fieldset>`).join('');
-  $('#check').onchange = e => { const id = e.target.dataset.c; if (!id) return; e.target.checked ? ck.add(id) : ck.delete(id); store.set('r50-check', [...ck]); };
+  $('#check').onchange = e => { const id = e.target.dataset.c; if (!id) return; e.target.checked ? ck.add(id) : ck.delete(id); store.set('r50-check', [...ck]); tally(); };
+  function tally() {
+    const nP = tries.filter(t => done.has(t.dataset.id)).length, tP = tries.length;
+    const nC = document.querySelectorAll('#check input:checked').length, tC = n;
+    $('#tPartsN').textContent = nP; $('#tPartsT').textContent = tP; $('#tPartsBar').style.width = (tP ? nP / tP * 100 : 0) + '%';
+    $('#tCheckN').textContent = nC; $('#tCheckT').textContent = tC; $('#tCheckBar').style.width = (tC ? nC / tC * 100 : 0) + '%';
+    $('#nextUntested').disabled = nP === tP;
+    $('#nextUntested').textContent = nP === tP ? 'Đã thử đủ mọi bộ phận' : 'Tới bộ phận chưa thử';
+  }
+  $('#nextUntested').onclick = () => { const t = tries.find(x => !done.has(x.dataset.id)); if (t) go(t.closest('.plate').id); };
+  let armed = 0;
+  $('#resetAll').onclick = e => {
+    const b = e.currentTarget;
+    if (!armed) { armed = setTimeout(() => { armed = 0; b.textContent = 'Xoá mọi đánh dấu'; b.classList.remove('warn'); }, 4000); b.textContent = 'Bấm lần nữa để xoá'; b.classList.add('warn'); return; }
+    clearTimeout(armed); armed = 0; b.textContent = 'Xoá mọi đánh dấu'; b.classList.remove('warn');
+    done.clear(); ck.clear(); store.set('r50-tested', []); store.set('r50-check', []);
+    tries.forEach(t => { t.querySelector('input').checked = false; t.classList.remove('done'); });
+    document.querySelectorAll('#check input').forEach(i => i.checked = false); tally();
+  };
+  tally();
+
+  document.querySelectorAll('table.stack').forEach(t => { const hs = [...t.querySelectorAll('thead th')].map(h => h.textContent); t.querySelectorAll('tbody tr').forEach(r => [...r.children].forEach((c, i) => c.dataset.l = hs[i] || '')); });
 
   /* ---------- từ điển ---------- */
   function gloss(q = '') { const t = q.toLowerCase().trim(); $('#gl').innerHTML = window.GLOSS.filter(g => !t || g.join(' ').toLowerCase().includes(t)).map(g => `<div class="g"><span class="mk">${g[0]}</span> <b>${g[1]}</b><p>${g[2]}</p></div>`).join('') || '<p class="muted">Không thấy thuật ngữ này.</p>'; }
@@ -97,8 +126,36 @@
   /* ---------- phòng thí nghiệm ---------- */
   SIM.mount($('#lab'));
 
-  /* ---------- đánh dấu mục đang xem ---------- */
-  const links = [...document.querySelectorAll('.bar nav a')];
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id)); } }), { rootMargin: '-40% 0px -55% 0px' });
-  links.forEach(l => { const t = document.querySelector(l.getAttribute('href')); if (t) io.observe(t); });
+  /* ---------- mục lục ---------- */
+  const SECS = [
+    ['Bắt đầu', [['ten', 'Đọc tên máy']]],
+    ['Bộ phận máy', FACES],
+    ['Thực hành', [['lab-sec', 'Phòng thí nghiệm ảnh'], ['hoc', 'Học chụp']]],
+    ['Khi đi mua', [['mua', 'Mua máy cũ'], ['tu-dien', 'Từ điển viết tắt'], ['quiz-sec', 'Tự kiểm tra']]]
+  ];
+  const label = Object.fromEntries(SECS.flatMap(g => g[1]));
+  label.top = 'Trang đầu';
+  $('#menuin').innerHTML = SECS.map(([g, items]) => `<div class="mgroup"><p>${g}</p>${items.map(([id, n]) => `<a href="#${id}" data-sec="${id}">${n}</a>`).join('')}</div>`).join('');
+  const menu = $('#menu'), mbtn = $('#menubtn');
+  function openMenu(o) { menu.hidden = !o; mbtn.setAttribute('aria-expanded', o); document.body.classList.toggle('menu-open', o); }
+  mbtn.onclick = () => openMenu(menu.hidden);
+  menu.onclick = e => { if (e.target.closest('a')) openMenu(false); };
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) { openMenu(false); mbtn.focus(); } });
+  document.addEventListener('click', e => { if (!menu.hidden && !e.target.closest('#bar')) openMenu(false); });
+
+  /* ---------- đánh dấu phần đang xem ---------- */
+  const PARTS = new Set(FACES.map(f => f[0]));
+  const navLinks = [...document.querySelectorAll('.mainnav a')], menuLinks = [...document.querySelectorAll('#menuin a')];
+  function setCurrent(id) {
+    navLinks.forEach(l => l.classList.toggle('on', l.dataset.group === 'parts' ? PARTS.has(id) : l.getAttribute('href') === '#' + id));
+    menuLinks.forEach(l => l.toggleAttribute('aria-current', l.dataset.sec === id));
+    $('#here').textContent = id === 'top' ? '' : (label[id] || '');
+  }
+  const watched = ['top', ...SECS.flatMap(g => g[1].map(i => i[0]))].map(id => document.getElementById(id)).filter(Boolean);
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setCurrent(e.target.id); }), { rootMargin: '-35% 0px -60% 0px' });
+  watched.forEach(t => io.observe(t));
+
+  const totop = $('#totop');
+  const onScroll = () => { totop.hidden = scrollY < innerHeight * 1.5; };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
 })();

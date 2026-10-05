@@ -10,21 +10,25 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="bar"><div class="wrap">
-  <b>Sổ tay Canon R50</b>
-  <nav aria-label="Mục lục">
-    <a href="#ten">Đọc tên máy</a><a href="#tren">Mặt trên</a><a href="#truoc">Mặt trước</a><a href="#sau">Mặt sau</a><a href="#canh">Cổng</a><a href="#day">Đáy máy</a><a href="#lens">Lens</a><a href="#manhinh">Màn hình</a><a href="#lab-sec">Phòng thí nghiệm</a><a href="#hoc">Học chụp</a><a href="#mua">Mua máy cũ</a><a href="#tu-dien">Từ điển</a><a href="#quiz-sec">Kiểm tra</a>
+<div class="bar" id="bar"><div class="wrap">
+  <a class="brand" href="#top"><i>Sổ tay </i><span>Canon R50</span></a>
+  <nav class="mainnav" aria-label="Các phần chính">
+    <a href="#ten">Tên máy</a><a href="#tren" data-group="parts">Bộ phận</a><a href="#lab-sec">Thí nghiệm</a><a href="#hoc">Học chụp</a><a href="#mua">Mua máy cũ</a><a href="#tu-dien">Từ điển</a><a href="#quiz-sec">Kiểm tra</a>
   </nav>
-  <span class="prog" id="prog" aria-live="polite"></span>
-</div></div>
+  <span class="here" id="here"></span>
+  <button class="menubtn" id="menubtn" type="button" aria-expanded="false" aria-controls="menu"><span class="burger" aria-hidden="true"></span>Mục lục</button>
+</div>
+<div class="menu" id="menu" hidden><div class="wrap" id="menuin"></div></div>
+</div>
 
-<header class="hero"><div class="wrap hero-grid">
+<header class="hero" id="top"><div class="wrap hero-grid">
   <div>
     <h1>Canon EOS R50 từ số 0</h1>
     <p class="lead">Mỗi nút, mỗi chữ in trên máy và trên ống kính đều có một phần riêng: nó là gì, dùng khi nào và cách thử khi bạn mua máy cũ. Chạm vào chấm vàng trên hình để nhảy tới đúng bộ phận.</p>
     <ul class="how">
       <li>Chữ trên nền đen, như <span class="mk">MENU</span>, là chữ thật in trên máy.</li>
       <li>Hình tròn vàng quanh bộ phận là chỗ đang giải thích. Hình nhỏ ở góc cho biết bạn đang xem vùng nào.</li>
+      <li>Mỗi bộ phận có ô xanh <b>Thử khi mua máy cũ</b>. Khi đi xem máy, làm theo hướng dẫn trong ô rồi đánh dấu; số bộ phận đã thử được đếm ở phần <a href="#mua">Mua máy cũ</a>.</li>
       <li>Muốn xem ảnh hưởng của khẩu độ, tốc độ, ISO và tiêu cự, kéo thanh trượt ở <a href="#lab-sec">Phòng thí nghiệm</a>.</li>
     </ul>
   </div>
@@ -32,6 +36,7 @@
     <div class="viewtabs" id="viewtabs" role="group" aria-label="Chọn mặt máy"></div>
     <div style="position:relative" id="mapbody"></div>
     <p class="tapnote">Hình vẽ minh họa, vị trí gần đúng. Khi cầm máy thật, hãy tìm đúng chữ in trên nút.</p>
+    <div class="maplist" id="maplist" aria-label="Bộ phận trên mặt này"></div>
   </div>
 </div></header>
 <hr class="rule">
@@ -68,7 +73,7 @@
     <div class="card"><h4>Cấu hình khởi đầu gợi ý</h4><p><b>Chụp người ngoài trời:</b> chế độ Av, mở khẩu lớn nhất lens cho phép, ISO tự động, bật nhận diện người/mắt. <b>Phong cảnh:</b> Av, f/8 nếu đủ sáng, ISO 100–400, tiêu cự 18–24 mm. <b>Trong nhà tối:</b> đừng giữ ISO 100; chấp nhận một chút nhiễu để tốc độ đủ nhanh.</p></div>
   </div>
   <h3 style="margin-top:22px">Vòng chọn chế độ (theo hướng dẫn Canon)</h3>
-  <div class="tscroll"><table>
+  <div class="tscroll"><table class="stack">
     <thead><tr><th>Ký hiệu</th><th>Tên</th><th>Bạn điều khiển</th><th>Dùng khi nào</th></tr></thead>
     <tbody>
       <tr><td><span class="mk">A+</span></td><td>Scene Intelligent Auto</td><td>Gần như không</td><td>Mới cầm máy, cần ảnh ngay.</td></tr>
@@ -86,7 +91,25 @@
 <hr class="rule">
 
 <section class="chap" id="mua"><div class="wrap">
-  <header><h2>Đi xem máy cũ: danh sách kiểm tra</h2><p>Đánh dấu khi bạn đã kiểm tra. Danh sách được lưu trong trình duyệt của bạn.</p></header>
+  <header><h2>Đi xem máy cũ: danh sách kiểm tra</h2><p>Mang trang này theo khi đi xem máy. Có hai chỗ để đánh dấu: ô xanh ở từng bộ phận phía trên, và danh sách bên dưới. Đánh dấu chỉ lưu trong trình duyệt trên máy bạn đang dùng.</p></header>
+  <div class="card tally">
+    <div class="tally-grid">
+      <div class="tal">
+        <div class="tal-num"><b id="tPartsN">0</b>/<span id="tPartsT">0</span></div>
+        <div class="tal-txt"><b>Bộ phận đã thử</b><span>Đếm các ô xanh “Thử khi mua máy cũ” bạn đã đánh dấu ở từng bộ phận.</span></div>
+        <div class="meter"><i id="tPartsBar"></i></div>
+      </div>
+      <div class="tal">
+        <div class="tal-num"><b id="tCheckN">0</b>/<span id="tCheckT">0</span></div>
+        <div class="tal-txt"><b>Mục trong danh sách</b><span>Đếm các ô bạn đánh dấu trong danh sách kiểm tra ngay dưới đây.</span></div>
+        <div class="meter"><i id="tCheckBar"></i></div>
+      </div>
+    </div>
+    <div class="tally-act">
+      <button class="btn2" id="nextUntested" type="button">Tới bộ phận chưa thử</button>
+      <button class="btn2 ghost" id="resetAll" type="button">Xoá mọi đánh dấu</button>
+    </div>
+  </div>
   <div class="card"><div id="check" class="checks"></div></div>
   <h3 style="margin-top:22px">Phụ kiện đi kèm</h3>
   <ul class="plain" id="acc"></ul>
@@ -109,6 +132,8 @@
   <p><b>Nguồn:</b> tên bộ phận và chức năng theo hướng dẫn chính thức của Canon (Advanced User Guide EOS R50), kiểm tra lại với <a href="https://cam.start.canon/" target="_blank" rel="noopener">cam.start.canon</a>. Hình máy ảnh trong trang là sơ đồ minh họa tự vẽ, vị trí gần đúng; phần "Đáy máy" dùng ảnh thật của chiếc máy bạn gửi.</p>
   <p class="muted small">Phòng thí nghiệm ảnh là mô phỏng để học khái niệm, không thay thế việc tự chụp thử.</p>
 </div></footer>
+
+<a class="totop" id="totop" href="#top" aria-label="Lên đầu trang" hidden>↑</a>
 
 <script src="js/camera-art.js"></script>
 <script src="js/data-body.js"></script>
